@@ -1,0 +1,27 @@
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: {{ git_url | split('/') | last | regex_replace('([\.-])', '') }}-ns
+# ---
+# apiVersion: apps.open-cluster-management.io/v1
+# kind: Channel
+# metadata:
+#   annotations:
+#     apps.open-cluster-management.io/reconcile-rate: medium
+#   name: {{ git_url | split('/') | last | regex_replace('([\.-])', '') }}-channel
+#   namespace: {{ git_url | split('/') | last | regex_replace('([\.-])', '') }}-ns
+# spec:
+#   type: Git
+#   pathname: '{{ git_url }}'
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: {{ git_url | split('/') | last | regex_replace('([\.-])', '') }}-channel
+  namespace: {{ cluster_name }}
+spec:
+  type: Git
+  pathname: '{{ git_url }}'
